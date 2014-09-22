@@ -1,39 +1,46 @@
-
 #include <iostream>
 #include <vector>
 #include <deque>
 #include <map>
-
+#include "type_def.h"
+#include <stdio.h>
+#include "list.h"
 
 using namespace std;
 
 int main(void)
-
 {
-	vector<int> ver;
+	List<u32> l;
+
+	l.InsertHead(56);
+	l.InsertHead(32);
+	l.InsertHead(15);
+	l.InsertHead(8);
+
+	List<u32>::Position pos = l.Find(15);
+	l.InsertAfter(pos, 17);
+
+	printf("\n");
+	pos = l.GetHead();
+	//List<u32>::Position tail = l.GetTail();
+	while (pos != NULL)
+	{
+		printf("%d ", l.GetData(pos));
+		pos = l.GetNext(pos);
+	}
+
+	l.Delete(15);
+
+	printf("\n");
+	 pos = l.GetHead();
+	// tail = l.GetTail();
+	while (pos != NULL)
+	{
+		printf("%d ", l.GetData(pos));
+		pos = l.GetNext(pos);
+	}
 	
-	ver.push_back(12);
-	
-	ver.push_back(22);
-	ver.push_back(22);
-	
-	//ver.end();
-
-	deque<int> deq;
-	deq.push_back(22);
-	//deq.begin();
-
-	map<int, string> m;
-	//m.begin();
-	//m.begin();
-
-
-	string str = "bao";
-	const char *pStr = str.c_str();
-	printf("%s\n", pStr);
-
-	
-
+	//system("pause");
 	return 0;	
 }
 

@@ -17,7 +17,8 @@ SRC_DIR := $(TOP)/source
 
 ## Name and type of the target for this Makefile
 
-ARC_TARGET   := container
+APP_TARGET := main
+
 ## Define debugging symbols
 DEBUG = 0
 LINUX_COMPILER=_LINUX_# _EQUATOR_, _HHPPC_, _LINUX_ and so on
@@ -27,20 +28,23 @@ PWLIB_SUPPORT = 0
 CPP_FILES = $(wildcard $(SRC_DIR)/*.cpp)
 
 OBJS := $(CPP_FILES:%.cpp=%)
+
+
+
+	
+	
 	
 ## Libraries to include in shared object file
 LIBS :=  
 
 ## Add driver-specific include directory to the search path
 
-
 CFLAGS += -D_LINUX_
 
 INC_PATH += $(TOP)/include \
-         += /usr/include/boost
 
 LIB_PATH := $(TOP)/lib \
 
-INSTALL_APP_PATH = ../lib
+INSTALL_APP_PATH = ./bin
 
 include ./common.mk
