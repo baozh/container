@@ -33,6 +33,7 @@ class List
 {
 public:
 	typedef ListNode<T>* Position;
+	typedef BOOL32 (*VisitFunc)(void *data, void *ctx);
 
 	List();
 	List(const List& tOther);
@@ -43,38 +44,242 @@ public:
 	BOOL32 MakeEmpty();    //释放所有结点
 	size_t GetSize();
 
-	BOOL32 InsertBefore(Position pos, const T &tData) {return __insert_before(pos,tData);};      //将tData插入到pos结点之前
-	BOOL32 InsertAfter(Position pos, const T &tData) {return __insert_after(pos,tData);};       //将tData插入到pos结点之后
+	BOOL32 InsertBefore(Position pos, const T &tData);      //将tData插入到pos结点之前
+	BOOL32 InsertAfter(Position pos, const T &tData);       //将tData插入到pos结点之后
 	BOOL32 InsertHead(const T &tData);
 	BOOL32 InsertTail(const T &tData);
 	
 	size_t Delete(const T &tData);   //删除所有值为tData的结点，并返回删除的结点数
-	BOOL32 Delete(Position pos) {return __delete_node(pos);};
+	BOOL32 Delete(Position pos);
 	BOOL32 DeleteHead();
 	BOOL32 DeleteTail();
 
-	Position Find(const T &tData) {return __find(tData);};
+	Position Find(const T &tData);
 	Position GetPrev(const Position pos) {return pos->m_pPrev;};
-	Position GetNext(const ListNode<T> * pos) {return pos->m_pNext;};
+	Position GetNext(const Position pos) {return pos->m_pNext;};
 	Position GetHead() {return m_pHead;};
 	Position GetTail() {return m_pTail;};
 
-	T GetData(const Position pos) {return __get_data(pos);};
-	BOOL32 SetData(Position pos, T tData) {return __set_data(pos, tData);};
-
+	T GetData(const Position pos);
+	BOOL32 SetData(Position pos, T tData);
+	BOOL32 Sort() {__sort_list(m_pHead, m_pTail); return TRUE;};
+	BOOL32 ForeachList(VisitFunc visit, void *ctx);
+	BOOL32 Swap(Position pos1, Position pos2);
 private:
 	void __copy(const List& tOther);
-	ListNode<T>* __find(const T &tData);
-	T __get_data(const ListNode<T> * pos);
-	BOOL32 __set_data(ListNode<T> * pos, T tData);
-	BOOL32 __delete_node(ListNode<T> * pos);
-	BOOL32 __insert_before(ListNode<T> * pos, const T &tData);
-	BOOL32 __insert_after(ListNode<T> * pos, const T &tData);
+	void __sort_list(Position begin, Position end);
+	void __swap_ptr(ListNode<T> **pos1, ListNode<T> **pos2);
 private:
 	ListNode<T>* m_pHead;
 	ListNode<T>* m_pTail;
 };
 
+template <class T>
+void List<T>::__swap_ptr(ListNode<T> **pos1, ListNode<T> **pos2)
+{
+	if (*pos1 == *pos2)
+	{
+		return;
+	}
+	ListNode<T> *tmp = *pos1;
+	*pos1 = *pos2;
+	*pos2 = tmp;
+};
+
+template <class T>
+void List<T>::__sort_list(Position begin, Position end)
+{
+	if(begin == NULL || end == NULL)  
+        return;  
+    if(begin == end)  
+        return;  
+    ListNode<T> *pslow = begin;  
+    ListNode<T> *pfast = begin->m_pNext;  
+    ListNode<T> *ptemp = NULL, *ptemp1 = NULL, *pEndFlag = NULL;
+	pEndFlag = end;
+    while(true)  
+    {  
+		ptemp = pfast;
+		ptemp1 = pfast->m_pNext;
+        if(pfast->m_tData < begin->m_tData)       //每次都选择待排序链表的头结点作为划分的基准  
+        {   
+            pslow = pslow->m_pNext;
+            Swap(pslow, pfast);                   //pslow指针指向比基准小的结点组成的链表的最后一个结点
+			__swap_ptr(&pslow, &pfast);
+        }  
+		if (ptemp == pEndFlag || ptemp == NULL)
+		{
+			break;
+		}
+        pfast = ptemp1;
+    }  
+	
+	BOOL32 bIsPivotLeft = FALSE, bIsPivotRight = FALSE;
+	if (pslow == begin)
+	{
+		bIsPivotLeft = TRUE;   //轴值的位置在最左边，则此时不需要对轴值左边的部分排序
+	}
+	if (pslow == end)
+	{
+		bIsPivotRight = TRUE;
+		end = begin;
+	}
+    Swap(pslow, begin);   //此时pslow就是基准的位置，所以要与基准（begin结点）交换
+	__swap_ptr(&pslow, &begin);
+	
+	ListNode<T> *pLeftEnd = pslow->m_pPrev;
+	ListNode<T> *pRightBegin = pslow->m_pNext;
+	if (bIsPivotLeft == FALSE)
+	{
+		__sort_list(begin, pLeftEnd);     //ptemp为左右两部分分割点（基准）的前一个结点 
+	}
+ 
+	if (bIsPivotRight == FALSE)
+	{
+		__sort_list(pRightBegin, end);     //右部分是比基准大的结点组成的链表
+	}
+};
+
+template <class T>
+BOOL32 List<T>::Swap(Position pos1, Position pos2)/*任意交换两个结点*/ 
+{
+	if (pos1 == NULL || pos2 == NULL)
+	{
+		return FALSE;
+	}
+	if(pos1 == pos2)
+	{
+		return TRUE;
+	}
+
+	ListNode<T> *temp, *temp1; 
+
+	//对pos1,pos2调整一下位置：pos1放前面的结点, pos2放后面的结点
+	if (pos2 == m_pHead && pos1 == m_pTail)
+	{
+		pos1 = m_pHead;
+		pos2 = m_pTail;
+	}
+	else if (pos2 == m_pHead)
+	{
+		pos2 = pos1;
+		pos1 = m_pHead;
+	}
+	else if (pos1 == m_pTail)
+	{
+		pos1 = pos2;
+		pos2 = m_pTail;
+	}
+
+	if (pos2->m_pNext == pos1)
+	{
+		ListNode<T> *temp1 = pos1;
+		pos1 = pos2;
+		pos2 = temp1;
+	}
+
+	if(pos1 == m_pHead && pos2 == m_pTail)/*首和尾巴的交换*/ 
+	{ 
+		if(pos1->m_pNext==pos2)/*只有两个结点的情况下*/ 
+		{ 
+			pos2->m_pNext=pos1; 
+			pos2->m_pPrev=NULL; 
+			pos1->m_pPrev=pos2; 
+			pos1->m_pNext=NULL; 
+			m_pHead = pos2; 
+			m_pTail = pos1;
+		} 
+		else/*有间隔的首尾交换*/ 
+		{ 
+			pos1->m_pNext->m_pPrev=pos2; 
+			pos2->m_pPrev->m_pNext=pos1; 
+			pos2->m_pNext=pos1->m_pNext; 
+			pos1->m_pPrev=pos2->m_pPrev; 
+			pos2->m_pPrev = pos1->m_pNext = NULL; 
+			m_pHead = pos2;   /*尾结点成为头结点*/ 
+			m_pTail = pos1;
+		}
+	}
+	else if(pos2 == m_pTail)/*尾和任意一个交换*/ 
+	{ 
+		if(pos1->m_pNext==pos2)/*交换最后两个结点*/ 
+		{ 
+			pos1->m_pPrev->m_pNext=pos2;
+			pos2->m_pPrev=pos1->m_pPrev;
+			pos2->m_pNext=pos1; 
+			pos1->m_pPrev=pos2; 
+			pos1->m_pNext=NULL;
+			m_pTail = pos1;
+		} 
+		else/*和前面其他结点交换*/ 
+		{ 
+			temp=pos2->m_pPrev; 
+			temp->m_pNext=pos1; 
+			pos1->m_pPrev->m_pNext=pos2; 
+			pos1->m_pNext->m_pPrev=pos2; 
+			pos2->m_pPrev=pos1->m_pPrev; 
+			pos2->m_pNext=pos1->m_pNext; 
+			pos1->m_pPrev=temp; 
+			pos1->m_pNext=NULL; 
+			m_pTail = pos1;
+		} 
+	} 
+	else if(pos1 == m_pHead)/*头和任意一个交换*/ 
+	{ 
+		if(pos1->m_pNext==pos2)/*交换头两个结点*/ 
+		{ 
+			pos2->m_pNext->m_pPrev=pos1; 
+			pos1->m_pNext=pos2->m_pNext; 
+			pos1->m_pPrev=pos2; 
+			pos2->m_pNext=pos1; 
+			pos2->m_pPrev=NULL; 
+			m_pHead=pos2; 
+		} 
+		else/*头结点和后面其他结点交换*/ 
+		{ 
+			temp=pos1->m_pNext; 
+			temp->m_pPrev=pos2; 
+			pos1->m_pPrev=pos2->m_pPrev; 
+			pos1->m_pNext=pos2->m_pNext; 
+			pos2->m_pPrev->m_pNext=pos1; 
+			pos2->m_pNext->m_pPrev=pos1; 
+			pos2->m_pNext=temp; 
+			pos2->m_pPrev=NULL; 
+			m_pHead=pos2;/*交换的结点成为头结点*/ 
+		} 
+	} 
+	else/*当中的任意两个交换*/ 
+	{ 
+		if(pos1->m_pNext==pos2)/*交换连在一起的两个结点*/ 
+		{ 
+			temp=pos1->m_pPrev; 
+			pos1->m_pPrev->m_pNext=pos2; 
+			pos1->m_pNext->m_pPrev=pos2; 
+			pos1->m_pPrev=pos2; 
+			pos1->m_pNext=pos2->m_pNext; 
+			pos2->m_pNext->m_pPrev=pos1; 
+			pos2->m_pNext=pos1; 
+			pos2->m_pPrev=temp; 
+		} 
+		else/*交换隔开的两个结点*/ 
+		{ 
+			temp1 = pos1->m_pPrev;
+			pos1->m_pPrev->m_pNext=pos2; 
+			pos1->m_pNext->m_pPrev=pos2; 
+			pos1->m_pPrev=pos2->m_pPrev; 
+
+			temp=pos1->m_pNext;
+			pos1->m_pNext=pos2->m_pNext; 
+
+			pos2->m_pPrev->m_pNext=pos1; 
+			pos2->m_pNext->m_pPrev=pos1; 
+			pos2->m_pNext=temp; 
+
+			pos2->m_pPrev=temp1; 
+		} 
+	} 
+	return TRUE;
+}; 
 
 template <class T>
 List<T>::List()
@@ -109,7 +314,7 @@ size_t List<T>::GetSize()
 };
 
 template <typename T>
-BOOL32 List<T>::__insert_before(ListNode<T> * pos, const T& tData)
+BOOL32 List<T>::InsertBefore(Position pos, const T& tData)
 {
 	if (pos == NULL) return FALSE;
 
@@ -141,7 +346,7 @@ BOOL32 List<T>::__insert_before(ListNode<T> * pos, const T& tData)
 };
 
 template <typename T>
-BOOL32 List<T>::__insert_after(ListNode<T> * pos, const T& tData)
+BOOL32 List<T>::InsertAfter(Position pos, const T& tData)
 {
 	if (pos == NULL) return FALSE;
 	
@@ -209,6 +414,7 @@ BOOL32 List<T>::InsertTail(const T& tData)
 		
 		m_pHead = pNode;
 		m_pTail = pNode;
+		return TRUE;
 	}
 	else
 	{
@@ -263,7 +469,7 @@ BOOL32 List<T>::DeleteTail()
 };
 
 template <typename T>
-BOOL32 List<T>::__delete_node(ListNode<T> * pos)
+BOOL32 List<T>::Delete(Position pos)
 {
 	if (pos == NULL) return FALSE;
 
@@ -313,24 +519,24 @@ size_t List<T>::Delete(const T& tData)
 };
 
 template <typename T>
-ListNode<T>* List<T>::__find(const T &tData)
+ListNode<T>* List<T>::Find(const T &tData)
 {
 	ListNode<T> *p = m_pHead;
 	while(p != NULL && p->m_tData != tData)
 	{
 		p = p->m_pNext;
 	}
-	return p;
+	return (Position)p;
 };
 
 template <typename T>
-T List<T>::__get_data(const ListNode<T> * pos)
+T List<T>::GetData(const Position pos)
 {
 	return pos->m_tData;
 };
 
 template <typename T>
-BOOL32 List<T>::__set_data(ListNode<T> * pos, T tData)
+BOOL32 List<T>::SetData(Position pos, T tData)
 {
 	pos->m_tData = tData;
 	return TRUE;
@@ -396,5 +602,20 @@ List<T>& List<T>::operator=(const List<T>& tOther)
 	
 	return *this;
 };
+
+template <typename T>
+BOOL32 List<T>::ForeachList(VisitFunc visit, void *ctx)
+{
+	if (visit == NULL) return FALSE;
+
+	ListNode<T>* pos = m_pHead;
+	BOOL32 bResult = FALSE;
+	while(pos != NULL)
+	{
+		bResult = visit((void *)&(pos->m_tData), ctx);
+		pos = pos->m_pNext;
+	}
+	return bResult;
+}
 
 #endif    /* _List_H */
