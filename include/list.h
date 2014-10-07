@@ -24,8 +24,8 @@ public:
 	ListNode<T> *m_pNext;
 	T	      m_tData;
 	
-	ListNode() {m_pNext = NULL; m_pPrev = NULL;}
-	~ListNode() {m_pNext = NULL; m_pPrev = NULL;}
+	ListNode():m_pNext(NULL), m_pPrev(NULL) {};
+	~ListNode() {m_pNext = NULL; m_pPrev = NULL;};
 };
 
 template <typename T>
@@ -35,7 +35,7 @@ public:
 	typedef ListNode<T>* Position;
 	typedef BOOL32 (*VisitFunc)(void *data, void *ctx);
 
-	List();
+	List():m_pHead(NULL), m_pTail(NULL) {};
 	List(const List& tOther);
 	List& operator=(const List &tOther);
 	~List();
@@ -63,7 +63,7 @@ public:
 	T GetData(const Position pos);
 	BOOL32 SetData(Position pos, T tData);
 	BOOL32 Sort() {__sort_list(m_pHead, m_pTail); return TRUE;};
-	BOOL32 ForeachList(VisitFunc visit, void *ctx);
+	BOOL32 Foreach(VisitFunc visit, void *ctx);
 	BOOL32 Swap(Position pos1, Position pos2);
 private:
 	void __copy(const List& tOther);
@@ -281,12 +281,12 @@ BOOL32 List<T>::Swap(Position pos1, Position pos2)/*任意交换两个结点*/
 	return TRUE;
 }; 
 
-template <class T>
-List<T>::List()
-{
-	m_pHead = NULL;
-	m_pTail = NULL;
-};
+// template <class T>
+// List<T>::List()
+// {
+// 	m_pHead = NULL;
+// 	m_pTail = NULL;
+// };
 
 template <class T>
 List<T>::~List()
@@ -604,7 +604,7 @@ List<T>& List<T>::operator=(const List<T>& tOther)
 };
 
 template <typename T>
-BOOL32 List<T>::ForeachList(VisitFunc visit, void *ctx)
+BOOL32 List<T>::Foreach(VisitFunc visit, void *ctx)
 {
 	if (visit == NULL) return FALSE;
 

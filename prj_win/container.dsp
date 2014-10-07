@@ -95,6 +95,10 @@ SOURCE=..\source\main.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\include\darray.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\include\list.h
 # End Source File
 # End Group

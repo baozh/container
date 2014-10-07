@@ -4,10 +4,12 @@
 #include <map>
 #include "type_def.h"
 #include <stdio.h>
-#include "list.h"
 #include <string>
 #include <cctype>
 #include <algorithm>
+#include "darray.h"
+#include "list.h"
+
 
 using namespace std;
 
@@ -47,9 +49,99 @@ BOOL32 concat_str(void *data, void *ctx)
 	return TRUE;
 }
 
-
 int main(void)
 {
+	DArray<u32> a;
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	
+	a.PushBack(45);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PushBack(67);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PushBack(34);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PushBack(896);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PushBack(345);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+
+	a.PushBack(77);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PushBack(55);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PushBack(33);
+	a.PushBack(88);
+	a.PushBack(543);a.PushBack(234);
+	a.PushBack(323);
+		cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PushBack(103);
+	a.PushBack(786);
+	a.PushBack(367);
+
+	a.PushBack(666);
+	a.PushBack(777);
+	a.PushBack(888);
+		cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PushBack(444);
+	a.PushBack(555);
+	a.Foreach(print, NULL);
+
+	//cout<<endl;
+	//a.Sort();
+	//a.Foreach(print, NULL);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.DeleteElem(555);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.Delete(0);
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopBack();
+	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+
+
+
+
+	/*
 	List<u32> l;
 
 	l.InsertTail(15);
@@ -96,6 +188,7 @@ int main(void)
 
 	printf("\nprint list:\n");
 	l.ForeachList(print, NULL);
+	*/
 
 	/*
 	List<u32>::Position pos = l.Find(15);
