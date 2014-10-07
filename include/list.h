@@ -38,6 +38,7 @@ public:
 	List():m_pHead(NULL), m_pTail(NULL) {};
 	List(const List& tOther);
 	List& operator=(const List &tOther);
+	BOOL32 operator==(const List &tOther);
 	~List();
 
 	BOOL32 IsEmpty();
@@ -616,6 +617,28 @@ BOOL32 List<T>::Foreach(VisitFunc visit, void *ctx)
 		pos = pos->m_pNext;
 	}
 	return bResult;
-}
+};
 
+template <typename T>
+BOOL32 List<T>::operator==(const List<T> &tOther)
+{
+	if (GetSize() != tOther.GetSize())
+	{
+		return FALSE;
+	}
+
+	ListNode<T>* pos1 = m_pHead;
+	ListNode<T>* pos2 = tOther.m_pHead;
+	
+	while(pos1 != NULL && pos2 != NULL)
+	{
+		if (pos1->m_tData != pos2->m_tData)
+		{
+			return FALSE;
+		}
+		pos1 = pos1->m_pNext;
+		pos2 = pos2->m_pNext;
+	}
+	return TRUE;
+};
 #endif    /* _List_H */

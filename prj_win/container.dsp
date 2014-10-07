@@ -99,7 +99,19 @@ SOURCE=..\include\darray.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\include\deque.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\include\list.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\queue.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\stack.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

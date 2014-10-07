@@ -9,7 +9,7 @@
 #include <algorithm>
 #include "darray.h"
 #include "list.h"
-
+#include "queue.h"
 
 using namespace std;
 
@@ -51,36 +51,36 @@ BOOL32 concat_str(void *data, void *ctx)
 
 int main(void)
 {
-	DArray<u32> a;
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	Queue<u32> a;
+	cout<<a.GetSize()<<endl;
 	
 	a.PushBack(45);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 	a.PushBack(67);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 	a.PushBack(34);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 	a.PushBack(896);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 	a.PushBack(345);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 
 	a.PushBack(77);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 	a.PushBack(55);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	cout<<a.GetSize()<<endl;
 
 	a.PushBack(33);
 	a.PushBack(88);
 	a.PushBack(543);a.PushBack(234);
 	a.PushBack(323);
-		cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+		cout<<a.GetSize()<<endl;
 	a.PushBack(103);
 	a.PushBack(786);
 	a.PushBack(367);
@@ -88,55 +88,59 @@ int main(void)
 	a.PushBack(666);
 	a.PushBack(777);
 	a.PushBack(888);
-		cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+		cout<<a.GetSize()<<endl;
 	a.PushBack(444);
 	a.PushBack(555);
+
+
+	cout<<endl<<"size = "<<a.GetSize()<<endl;
 	a.Foreach(print, NULL);
 
 	//cout<<endl;
 	//a.Sort();
 	//a.Foreach(print, NULL);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
-	a.DeleteElem(555);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
 
-	a.Delete(0);
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopFront();
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopFront();
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopFront();
+	cout<<endl<<"size = "<<a.GetSize()<<endl;
+a.Foreach(print, NULL);
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopFront();
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopFront();
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+	a.PopFront();
+	cout<<endl<<"size = "<<a.GetSize()<<endl;
+a.Foreach(print, NULL);
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
+// 	a.PopFront();
+// 
+// 
+// 	a.PopFront();
+// 
+// 
+// 	a.PopFront();
+// 
+// 	a.PopFront();
+// 
+// 
+// 	a.PopFront();
+// 
+// 
+// 	a.PopFront();
+// 
+// 
+// 	a.PopFront();
+// 
+// 	a.PopFront();
 
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
-	a.PopBack();
-	cout<<a.GetSize()<<","<<a.GetCapacity()<<endl;
 
 
 

@@ -48,8 +48,8 @@ public:
 
 	T At(size_t nIndex) const;
 	T& operator[](size_t nIndex);
-	T Front() const;
-	T Back() const;
+	T GetFront() const;
+	T GetBack() const;
 	s32 Find(const T &tData);
 
 	BOOL32 Insert(size_t nIndex, const T &tData);   //将元素tData插入到nIndex位置，之后的元素后移.
@@ -63,7 +63,7 @@ public:
 	BOOL32 Sort() {__sort_array(0, m_dwSize-1); return TRUE;};
 private:
 	BOOL32 __set_capacity(size_t dwNewCapacity);
-	BOOL32 __capacity_shrink();
+	BOOL32 __shrink_capacity();
 	void __copy(const DArray& cOther);
 	void __sort_array(size_t begin, size_t end);
 	void __swap(T *data1, T *data2);
@@ -110,9 +110,6 @@ BOOL32 DArray<T>::__set_capacity(size_t dwNewCapacity)
 {
 	if (dwNewCapacity == 0) dwNewCapacity = 1;
 	
-	//if (dwNewCapacity <= m_dwSize) 
-		//return FALSE;
-	
 	T* pNewData = new T[dwNewCapacity];
 	if (pNewData == NULL) 
 	{
@@ -132,7 +129,7 @@ BOOL32 DArray<T>::__set_capacity(size_t dwNewCapacity)
 };
 
 template <typename T>
-BOOL32 DArray<T>::__capacity_shrink()
+BOOL32 DArray<T>::__shrink_capacity()
 {
 	//当使用大小比空闲大小小时，将空间调整为使用大小的1.5倍.
 	if((m_dwSize < (m_dwCapacity >> 1)) && (m_dwSize > dwMinPreAllocSize))
@@ -172,7 +169,7 @@ size_t DArray<T>::DeleteElem(const T& cElem)
 			}
 		}		
 	}
-	__capacity_shrink();
+	__shrink_capacity();
 	return nEraseNum;
 };
 
@@ -189,7 +186,7 @@ BOOL32 DArray<T>::Delete(size_t nIndex)
 		m_pData[i] = m_pData[i+1];
 	}
 	m_dwSize--;
-	__capacity_shrink();
+	__shrink_capacity();
 	return TRUE;		
 };
 
@@ -203,7 +200,7 @@ T DArray<T>::PopBack()
 	}
 	T tmp = m_pData[m_dwSize-1];
 	m_dwSize--;
-	__capacity_shrink();
+	__shrink_capacity();
 	return tmp;
 };
 
@@ -241,7 +238,7 @@ T DArray<T>::At(size_t nIndex) const
 };
 
 template <typename T>
-T DArray<T>::Front() const
+T DArray<T>::GetFront() const
 {
 	if (m_dwSize < 1)
 	{
@@ -252,7 +249,7 @@ T DArray<T>::Front() const
 };
 
 template <typename T>
-T DArray<T>::Back() const
+T DArray<T>::GetBack() const
 {
 	if (m_dwSize < 1)
 	{
