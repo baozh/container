@@ -76,7 +76,7 @@ BOOL32 Queue<T>::PopFront()
 template <typename T>
 T Queue<T>::GetFront()
 {
-	return m_tList.GetHead();
+	return m_tList.GetData(m_tList.GetHead());
 };
 
 template <typename T>
