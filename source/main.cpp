@@ -10,6 +10,7 @@
 #include "darray.h"
 #include "list.h"
 #include "queue.h"
+#include "stack.h"
 
 using namespace std;
 
@@ -51,73 +52,74 @@ BOOL32 concat_str(void *data, void *ctx)
 
 int main(void)
 {
-	Queue<u32> a;
+	Stack<u32> a;
 	cout<<a.GetSize()<<endl;
 	
-	a.PushBack(45);
+	a.Push(45);
 	cout<<a.GetSize()<<endl;
 
-	a.PushBack(67);
+	a.Push(67);
 	cout<<a.GetSize()<<endl;
 
-	a.PushBack(34);
+	a.Push(34);
 	cout<<a.GetSize()<<endl;
 
-	a.PushBack(896);
+	a.Push(896);
 	cout<<a.GetSize()<<endl;
 
-	a.PushBack(345);
+	a.Push(345);
 	cout<<a.GetSize()<<endl;
 
 
-	a.PushBack(77);
+	a.Push(77);
 	cout<<a.GetSize()<<endl;
 
-	a.PushBack(55);
+	a.Push(55);
 	cout<<a.GetSize()<<endl;
 
-	a.PushBack(33);
-	a.PushBack(88);
-	a.PushBack(543);a.PushBack(234);
-	a.PushBack(323);
+	a.Push(33);
+	a.Push(88);
+	a.Push(543);a.Push(234);
+	a.Push(323);
 		cout<<a.GetSize()<<endl;
-	a.PushBack(103);
-	a.PushBack(786);
-	a.PushBack(367);
+	a.Push(103);
+	a.Push(786);
+	a.Push(367);
 
-	a.PushBack(666);
-	a.PushBack(777);
-	a.PushBack(888);
-		cout<<a.GetSize()<<endl;
-	a.PushBack(444);
-	a.PushBack(555);
+	a.Push(666);
+	a.Push(777);
+	a.Push(888);
+		cout<<endl<<"GetTop = "<<a.GetTop()<<endl;
+	a.Push(444);
+	a.Push(555);
 
 
-	cout<<endl<<"size = "<<a.GetSize()<<endl;
+	cout<<endl<<"GetTop = "<<a.GetTop()<<endl;
 	a.Foreach(print, NULL);
 
 	//cout<<endl;
 	//a.Sort();
 	//a.Foreach(print, NULL);
 
-	a.PopFront();
+
+	a.Pop();
 
 
-	a.PopFront();
+	a.Pop();
 
 
-	a.PopFront();
-	cout<<endl<<"size = "<<a.GetSize()<<endl;
-a.Foreach(print, NULL);
-
-	a.PopFront();
+	a.Pop();
+	cout<<endl<<"GetTop = "<<a.GetTop()<<endl;
 
 
-	a.PopFront();
+	a.Pop();
 
 
-	a.PopFront();
-	cout<<endl<<"size = "<<a.GetSize()<<endl;
+	a.Pop();
+
+
+	a.Pop();
+	cout<<endl<<"GetTop = "<<a.GetTop()<<endl;
 a.Foreach(print, NULL);
 
 // 	a.PopFront();
