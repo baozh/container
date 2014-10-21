@@ -11,8 +11,14 @@
 #include "list.h"
 #include "queue.h"
 #include "stack.h"
+#include "hash_map.h"
+#include "hash_set.h"
 
 using namespace std;
+
+
+
+
 
 
 BOOL32 print(void *data, void *ctx)
@@ -22,6 +28,13 @@ BOOL32 print(void *data, void *ctx)
 	return TRUE;
 }
 
+BOOL32 map_print(void *key, void *value, void *ctx)
+{
+	u32 *pKey = (u32*)key;
+	string *pStr = (string*)value;
+	cout<<"[map_print] key:"<<(*pKey)<<", value:"<<(*pStr)<<endl;
+	return TRUE;
+}
 
 BOOL32 print_str(void *data, void *ctx)
 {
@@ -52,6 +65,77 @@ BOOL32 concat_str(void *data, void *ctx)
 
 int main(void)
 {
+	CStrHashSet h;
+	
+	h.Insert("aaaa");
+	h.Insert("ccc87");
+	h.Insert("dsd");
+
+
+	h.Insert("safadf");
+	h.Insert("asbd");
+	h.Insert("asdre");
+		
+	CStrHashSet::Position pCur = h.GetBeginPos();
+	CStrHashSet::Position pEnd = h.GetEndPos();
+	while (pCur != pEnd)
+	{
+		std::cout<<"item:"<<h.GetItem(pCur)<<std::endl;
+		pCur = h.GetNextPos(pCur);
+	}
+
+
+	//h.ForeachPrint();
+
+	//cout<<"isexist(45):"<<h.Exist(45)<<", isexist(87):"<<h.Exist(76)<<endl;
+	
+// 	HashMap<u32, string> m;
+// 	m[99] = "99";
+// 	m[87] = "87";
+// 	m[77] = "77";
+// 	m[345] = "345";
+// 	m[77] = "77";
+// 	m[99] = "99";
+// 	m[234] = "234";
+// 	m[123] = "123";
+// 	m[732] = "732";
+// 	m[843] = "843";
+
+// 	m.ForeachPrint();
+// 	cout<<"exist(99):"<<m.Exist(99)<<endl;
+
+// 	cout<<"print m:"<<endl;
+// 	m.Foreach(map_print, NULL);
+// 	//m.ForeachPrint();
+// 
+// 
+// 	HashMap<u32, string> m1;
+// 	m1[345] = "345";
+// 	m1[3] = "765";
+// 	m1[843] = "843";
+// 	m1[56] = "56";
+// 	m1[732] = "732";
+// 	m1[77] = "77";
+// 	m1[99] = "99";
+// 	m1[234] = "234";
+// 	m1[7] = "7";
+// 	m1[123] = "123";
+// 	
+// 	cout<<"print m1:"<<endl;
+// 	m1.ForeachPrint();
+// 
+// 	cout<<"m == m1: "<<(m==m1)<<endl;
+// 
+// 	CStrMap<u32> strmap;
+// 	strmap["111"] = 1;
+// 	strmap["222"] = 2;
+// 	strmap["333"] = 3;
+// 
+// 	cout<<"print strmap:"<<endl;
+// 	strmap.ForeachPrint();
+	
+
+	/*
 	Stack<u32> a;
 	cout<<a.GetSize()<<endl;
 	
@@ -120,8 +204,10 @@ int main(void)
 
 	a.Pop();
 	cout<<endl<<"GetTop = "<<a.GetTop()<<endl;
-a.Foreach(print, NULL);
+a.Foreach(print, NULL);*/
 
+
+	//cout<<endl<<"5%0 = "<<(5%0)<<endl;
 // 	a.PopFront();
 // 
 // 

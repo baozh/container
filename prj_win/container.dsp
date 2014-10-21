@@ -103,7 +103,27 @@ SOURCE=..\include\deque.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\include\hash_map.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\hash_set.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\include\list.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\ordered_map.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\ordered_set.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\paddingassert.h
 # End Source File
 # Begin Source File
 
@@ -112,6 +132,10 @@ SOURCE=..\include\queue.h
 # Begin Source File
 
 SOURCE=..\include\stack.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\include\string_sso.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
