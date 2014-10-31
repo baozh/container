@@ -1,8 +1,12 @@
+
+
+
+
 #include <iostream>
 #include <vector>
 #include <deque>
 #include <map>
-#include "type_def.h"
+
 #include <stdio.h>
 #include <string>
 #include <cctype>
@@ -13,6 +17,19 @@
 #include "stack.h"
 #include "hash_map.h"
 #include "hash_set.h"
+
+
+
+
+
+#include<iterator>  
+ 
+#include<sstream>
+#include "type_def.h"
+#include "rbtree.h"
+
+
+
 
 using namespace std;
 
@@ -26,7 +43,7 @@ BOOL32 print(void *data, void *ctx)
 	u32 *pData = (u32*)data;
 	cout<<*pData<<"  ";
 	return TRUE;
-}
+};
 
 BOOL32 map_print(void *key, void *value, void *ctx)
 {
@@ -34,14 +51,14 @@ BOOL32 map_print(void *key, void *value, void *ctx)
 	string *pStr = (string*)value;
 	cout<<"[map_print] key:"<<(*pKey)<<", value:"<<(*pStr)<<endl;
 	return TRUE;
-}
+};
 
 BOOL32 print_str(void *data, void *ctx)
 {
 	string *pData = (string*)data;
 	cout<<*pData<<"  ";
 	return TRUE;
-}
+};
 
 BOOL32 toupper_str(void *data, void *ctx)
 {
@@ -49,7 +66,7 @@ BOOL32 toupper_str(void *data, void *ctx)
 
 	transform(pData->begin(), pData->end(), pData->begin(), ::toupper);
 	return TRUE;
-}
+};
 
 BOOL32 concat_str(void *data, void *ctx)
 {
@@ -61,28 +78,89 @@ BOOL32 concat_str(void *data, void *ctx)
 	//*ctx = *ctx + *pData;
 	
 	return TRUE;
-}
+};
 
 int main(void)
 {
-	CStrHashSet h;
+
+    RBTree<int,int> tree;
+    vector<int> v;
 	
-	h.Insert("aaaa");
-	h.Insert("ccc87");
-	h.Insert("dsd");
+    for(int i=0;i<20;++i)
+    {
+        v.push_back(i);
+    }
+    random_shuffle(v.begin(),v.end());
+    copy(v.begin(),v.end(),ostream_iterator<int>(cout," "));
+    cout<<endl;
+
+    stringstream sstr;
+    for(i=0;i<v.size();++i)
+    {  
+        tree.Insert(v[i],i);
+        cout<<"insert:"<<v[i]<<endl;   //添加结点
+    }
+	//tree.InOrderPrintNode();
+
+// 	RBNode<int,int>* node = tree.Find(19);
+// 	if (tree.IsUsefullNode(node))
+// 	{
+// 		cout<<"find result:"<<node->m_tKey<<endl;
+// 	}
 
 
-	h.Insert("safadf");
-	h.Insert("asbd");
-	h.Insert("asdre");
-		
-	CStrHashSet::Position pCur = h.GetBeginPos();
-	CStrHashSet::Position pEnd = h.GetEndPos();
-	while (pCur != pEnd)
-	{
-		std::cout<<"item:"<<h.GetItem(pCur)<<std::endl;
-		pCur = h.GetNextPos(pCur);
-	}
+
+	
+// 	RBNode<int,int>* node = tree.GetInOrderFirstNode();
+// 	RBNode<int,int>* pNullNode = tree.GetNullNode();
+// 	while(node != pNullNode)
+// 	{
+// 	std::cout<<"node->m_tKey:"<<node->m_tKey<<", node->data:"<<node->m_tData<<std::endl;
+// 	
+// 	//this->Insert(node->m_tKey, node->m_tData);
+// 	node = tree.InOrderSuccessor(node);
+// 	}
+
+	cout<<"[main]tree size:"<<tree.GetSize()<<endl; 
+
+	RBTree<int,int> tree1(tree);
+	tree1.InOrderPrintNode();
+
+	BOOL32 bResult = tree==tree1;
+	cout<<"tree==tree1:"<<bResult<<endl;
+
+
+
+//     for(i=0;i<v.size();++i)  
+//     {  
+//         cout<<"Delete:"<<v[i]<<endl;  
+//         tree.Delete(v[i]);             //删除结点  
+//         tree.InOrderPrintNode();  
+//     }  
+//     cout<<endl;  
+//     tree.InOrderPrintNode();
+	//system("pause");
+    //return 0;
+
+
+// 	CStrHashSet h;
+// 	
+// 	h.Insert("aaaa");
+// 	h.Insert("ccc87");
+// 	h.Insert("dsd");
+// 
+// 
+// 	h.Insert("safadf");
+// 	h.Insert("asbd");
+// 	h.Insert("asdre");
+// 		
+// 	CStrHashSet::Position pCur = h.GetBeginPos();
+// 	CStrHashSet::Position pEnd = h.GetEndPos();
+// 	while (pCur != pEnd)
+// 	{
+// 		std::cout<<"item:"<<h.GetItem(pCur)<<std::endl;
+// 		pCur = h.GetNextPos(pCur);
+// 	}
 
 
 	//h.ForeachPrint();

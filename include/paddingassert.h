@@ -137,11 +137,11 @@ public:
 
 #endif
 
-template<bool>
+template<BOOL32>
 struct MUST_ALIGN_WITH_ONE_BYTE;        //声明一个模板类，不定义，模版参数为fasle会有编译错误
 
 template<>
-struct MUST_ALIGN_WITH_ONE_BYTE<true> // 针对模版参数为true进行特化
+struct MUST_ALIGN_WITH_ONE_BYTE<TRUE> // 针对模版参数为true进行特化
 {
 };
 

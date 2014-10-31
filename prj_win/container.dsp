@@ -131,6 +131,10 @@ SOURCE=..\include\queue.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\include\rbtree.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\include\stack.h
 # End Source File
 # Begin Source File

@@ -98,7 +98,7 @@ void List<T>::__sort_list(Position begin, Position end)
     ListNode<T> *pfast = begin->m_pNext;  
     ListNode<T> *ptemp = NULL, *ptemp1 = NULL, *pEndFlag = NULL;
 	pEndFlag = end;
-    while(true)  
+    while(TRUE)  
     {  
 		ptemp = pfast;
 		ptemp1 = pfast->m_pNext;
