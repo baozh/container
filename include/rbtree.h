@@ -55,7 +55,7 @@ public:
         BOOL32 Insert(KEY key,VALUE data);
         BOOL32 Delete(KEY key);
 
-		s32 GetSize() {return m_dwSize;};
+		u32 GetSize() {return m_dwSize;};
 
 		RBNode<KEY,VALUE>* GetInOrderFirstNode() const;
 		RBNode<KEY,VALUE>* GetInOrderLastNode() const;
@@ -77,7 +77,7 @@ public:
     private:  
         RBNode<KEY,VALUE>* m_pNullNode;  
         RBNode<KEY,VALUE>* m_pRoot;  
-		s32 m_dwSize;
+		u32 m_dwSize;
 };
 
 template<class KEY,class VALUE>
@@ -209,7 +209,12 @@ template<class KEY,class VALUE>
 BOOL32 RBTree<KEY, VALUE>::MakeEmpty()
 {
 	__free_tree_node(m_pRoot);
-	delete m_pNullNode;
+	
+	this->m_pRoot = m_pNullNode;
+	this->m_pNullNode->m_pRChild = this->m_pRoot;
+	this->m_pNullNode->m_pLChild = this->m_pRoot;
+	this->m_pNullNode->m_pParent = this->m_pRoot;
+	this->m_pNullNode->m_tColor = RBNode<KEY, VALUE>::__COLOR_BLACK; 
 	m_dwSize = 0;
 	return TRUE;
 };
@@ -650,7 +655,7 @@ RBNode<KEY,VALUE>* RBTree<KEY, VALUE>::InOrderSuccessor(RBNode<KEY,VALUE>* node)
 			pCur = pCur->m_pParent;  
 		}  
 		pResult = pCur;         //first parent's left or null  
-	}  
+	}
 	return pResult;  
 };  
 
@@ -659,7 +664,7 @@ void RBTree<KEY, VALUE>::__free_tree_node(RBNode<KEY,VALUE>* node)
 {  
 	if(node==m_pNullNode)  
 	{  
-		return ;  
+		return;  
 	}  
 	else  
 	{  
@@ -667,7 +672,7 @@ void RBTree<KEY, VALUE>::__free_tree_node(RBNode<KEY,VALUE>* node)
 		__free_tree_node(node->m_pRChild);
 		delete node;
 	}
-};  
+};
 
 template<class KEY,class VALUE>
 void RBTree<KEY, VALUE>::__in_order_traverse(RBNode<KEY,VALUE>* node)  
@@ -679,7 +684,7 @@ void RBTree<KEY, VALUE>::__in_order_traverse(RBNode<KEY,VALUE>* node)
 	else  
 	{  
 		__in_order_traverse(node->m_pLChild);
-		std::cout<<node->m_tKey<<std::endl;
+		std::cout<<"key:"<<node->m_tKey<<std::endl;
 		__in_order_traverse(node->m_pRChild);
 	}  
 };

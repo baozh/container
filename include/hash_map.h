@@ -589,8 +589,7 @@ BOOL32 HashMap<KEY, VALUE, HASH, EQUAL>::Foreach(HashMap<KEY, VALUE, HASH, EQUAL
 		visit(&(pCur->m_tKey), &(pCur->m_tValue), ctx);
 		pCur = GetNextPos(pCur);
 	}
-	return TRUE;	
-
+	return TRUE;
 };
 
 #include "string_sso.h"
