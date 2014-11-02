@@ -1,13 +1,4 @@
-###
-### Copyright (c) 2004 Keda Telecom, Inc.
-###
 
-#########################################################################
-###
-###  DESCRIPTION:
-###    Common definitions for all Makefiles in cmusipcadp linux project.
-###
-#########################################################################
 
 TOP := ..
 

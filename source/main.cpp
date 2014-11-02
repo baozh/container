@@ -27,9 +27,8 @@
 #include<sstream>
 #include "type_def.h"
 #include "rbtree.h"
-
-
-
+#include "ordered_map.h"
+#include "ordered_set.h"
 
 using namespace std;
 
@@ -82,8 +81,11 @@ BOOL32 concat_str(void *data, void *ctx)
 
 int main(void)
 {
+	Set<int> aaa;
 
-    RBTree<int,int> tree;
+	//测试一下position.
+
+
     vector<int> v;
 	
     for(int i=0;i<20;++i)
@@ -97,9 +99,39 @@ int main(void)
     stringstream sstr;
     for(i=0;i<v.size();++i)
     {  
-        tree.Insert(v[i],i);
+        aaa.Insert(v[i]);
         cout<<"insert:"<<v[i]<<endl;   //添加结点
     }
+
+	
+	
+	Set<int>::Position pos = aaa.GetBeginPos();
+	Set<int>::Position end = aaa.GetEndPos();
+	while(pos != end)
+	{
+		cout<<"key:"<<aaa.GetItem(pos)<<endl;
+		pos = aaa.GetNextPos(pos);
+	}
+
+	cout<<"exist(99):"<<aaa.Exist(99)<<endl;
+
+	aaa.Insert(99);
+	cout<<"exist(99):"<<aaa.Exist(99)<<endl;
+
+	 pos = aaa.GetBeginPos();
+	 end = aaa.GetEndPos();
+	while(pos != end)
+	{
+		cout<<"key:"<<aaa.GetItem(pos)<<endl;
+		pos = aaa.GetNextPos(pos);
+	}
+
+	//aaa.ForeachPrint();
+	//aaa.InOrderPrintNode();
+	//aaa.MakeEmpty();
+
+	//aaa.InOrderPrintNode();
+
 	//tree.InOrderPrintNode();
 
 // 	RBNode<int,int>* node = tree.Find(19);
@@ -121,13 +153,13 @@ int main(void)
 // 	node = tree.InOrderSuccessor(node);
 // 	}
 
-	cout<<"[main]tree size:"<<tree.GetSize()<<endl; 
-
-	RBTree<int,int> tree1(tree);
-	tree1.InOrderPrintNode();
-
-	BOOL32 bResult = tree==tree1;
-	cout<<"tree==tree1:"<<bResult<<endl;
+// 	cout<<"[main]tree size:"<<tree.GetSize()<<endl; 
+// 
+// 	RBTree<int,int> tree1(tree);
+// 	tree1.InOrderPrintNode();
+// 
+// 	BOOL32 bResult = tree==tree1;
+// 	cout<<"tree==tree1:"<<bResult<<endl;
 
 
 
@@ -417,5 +449,6 @@ a.Foreach(print, NULL);*/
 	system("pause");
 	return 0;
 }
+
 
 
